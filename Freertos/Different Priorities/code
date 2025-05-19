@@ -1,0 +1,21 @@
+void TaskLow(void *pvParameters) {
+  while (1) {
+    Serial.println("Low Priority Task Running");
+    vTaskDelay(pdMS_TO_TICKS(1000));
+  }
+}
+
+void TaskHigh(void *pvParameters) {
+  while (1) {
+    Serial.println("HIGH Priority Task Running!");
+    vTaskDelay(pdMS_TO_TICKS(2000));
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  xTaskCreate(TaskLow, "Low", 1024, NULL, 1, NULL);
+  xTaskCreate(TaskHigh, "High", 1024, NULL, 2, NULL);  // Higher priority
+}
+
+void loop() {}
