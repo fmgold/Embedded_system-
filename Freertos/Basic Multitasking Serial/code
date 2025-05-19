@@ -1,0 +1,28 @@
+#include <Arduino.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
+void TaskOne(void *pvParameters) {
+  //pinMode(2, OUTPUT);
+  while (1) {
+    Serial.println("Hello from TaskPrint 1");
+    vTaskDelay(pdMS_TO_TICKS(500));
+    
+  }
+}
+
+void TaskTwo(void *pvParameters) {
+  while (1) {
+    Serial.println("Hello from TaskPrint 2");
+    vTaskDelay(pdMS_TO_TICKS(1000));
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  xTaskCreate(TaskOne, "PrintOne", 1024, NULL, 1, NULL);
+  xTaskCreate(TaskTwo, "PrintTwo", 1024, NULL, 1, NULL);
+}
+
+void loop() {}
+
